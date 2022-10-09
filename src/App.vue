@@ -24,6 +24,7 @@ const columns: ITableColumn[] = [
   {
     label: '序号',
     type: 'index',
+    align: "center",
     width: 60,
   },
   {
@@ -34,6 +35,9 @@ const columns: ITableColumn[] = [
   {
     label: 'date',
     prop: 'date',
+    renderText: (scope: any) => {
+      return scope.row.date + '111'
+    },
     width: '196',
   },
   {
@@ -44,28 +48,52 @@ const columns: ITableColumn[] = [
     label: 'empty text',
   },
   {
+    label: '状态',
+    type: 'status',
+    renderText: () => {
+      return '成功';
+    },
+    status: 'error',
+    statusType: 'dot'
+  },
+  {
+    label: '状态',
+    type: 'status',
+    renderText: () => {
+      return '成功';
+    },
+    status: () => '#fff',
+    statusType: 'tag'
+  },
+  {
     type: 'operate',
     label: '操作',
-    btnList: (scope: any) => {
-      return [
-        {
-          name: '查看0',
-          onClick: () => {console.log(0, scope)},
+    btnList: [
+      {
+        name: '查看0',
+        onClick: () => {
+          console.log(0)
         },
-        {
-          name: '查看1',
-          onClick: () => {console.log(1)},
+      },
+      {
+        name: '查看1',
+        onClick: () => {
+          console.log(1)
         },
-        {
-          name: '查看2',
-          onClick: () => {console.log(2)},
+      },
+      {
+        name: '查看2',
+        onClick: () => {
+          console.log(2)
         },
-        {
-          name: '查看3',
-          onClick: () => {console.log(3)},
-        }
-      ]
-    }
+      },
+      {
+        name: '查看3',
+        onClick: () => {
+          console.log(3)
+        },
+      }
+    ]
   }
 ]
 const data = ref([

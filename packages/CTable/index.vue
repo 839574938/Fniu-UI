@@ -9,11 +9,16 @@
         <template #default="scope">
           <template v-if="!column.type || (column.type && column.type === 'expand')">
             <slot :name="column.prop || column.type" :row="scope.row" :column="scope.column" :$index="scope.$index">
-              {{ (column.prop && scope.row[column.prop]) || props.emptyText }}
+              {{ realText(column, scope) }}
             </slot>
           </template>
           <template v-else-if="column.type && column.type === 'operate' && column.btnList">
-            <c-operate :type="column.btnType" :columns="column.btnList(scope).filter(item => item.show || !item.hasOwnProperty('show'))" />
+            <c-operate :type="column.btnType" :columns="operateColumns(column, scope)"/>
+          </template>
+          <template v-else-if="column.type && column.type === 'status' && column.status">
+            <c-status :shape="column.statusType" :type="statusTypeAndColor(column, scope)" :color="statusTypeAndColor(column, scope, '1')">
+              {{ realText(column, scope) }}
+            </c-status>
           </template>
         </template>
       </el-table-column>
@@ -35,7 +40,9 @@ export default {
 </script>
 <script lang="ts" setup>
 import {ITableColumn, IPagination} from "./interface";
-import {reactive, ref} from "vue";
+import {computed, reactive, ref} from "vue";
+import COperate from "../COperate/index.vue";
+import CStatus from "../CStatus/index.vue";
 
 interface ITableProps {
   columns?: ITableColumn[] | [],
@@ -81,6 +88,41 @@ const handleCurrentChange = (val: number) => {
   pagination.currentPage = val
   emits('paginationChange', pagination)
 }
+
+const realText = computed(() => {
+  return (column: ITableColumn, scope: any) => {
+    if (column.renderText) {
+      return column.renderText(scope)
+    }
+    if (column.prop) {
+      return scope.row[column.prop]
+    }
+
+    return props.emptyText || ''
+  }
+})
+
+const operateColumns = computed(() => {
+  return (column: ITableColumn, scope: any) => {
+    if (column.btnList) {
+      return Array.isArray(column.btnList) ?
+        column.btnList :
+        column.btnList(scope).filter(item => item.show || !item.hasOwnProperty('show'))
+    }
+    return []
+  }
+})
+
+const statusTypeAndColor = computed(() => {
+  return (column: ITableColumn, scope: any, flag = '0') => {
+    if (column.status) {
+      const status = typeof column.status === 'string' ? column.status : column.status(scope)
+      const isStatus = ['success', 'info', 'warning', 'danger', 'error'].indexOf(status) !== -1
+      return (flag === '0' ? isStatus : !isStatus) ? status : null
+    }
+    return null
+  }
+})
 </script>
 
 <style scoped lang="scss">

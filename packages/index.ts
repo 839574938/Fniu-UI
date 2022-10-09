@@ -1,10 +1,12 @@
 import CTable from "./CTable/index.vue";
 import COperate from "./COperate/index.vue"
+import CStatus from './CStatus/index.vue'
 import type {App} from 'vue'
 
 const components = [
   CTable,
-  COperate
+  COperate,
+  CStatus
 ]
 
 const INSTALLED_KEY = Symbol('INSTALLED_KEY')
