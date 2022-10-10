@@ -36,7 +36,7 @@ const columns: ITableColumn[] = [
     label: 'date',
     prop: 'date',
     renderText: (scope: any) => {
-      return scope.row.date + '111'
+      return scope.row.date
     },
     width: '196',
   },
@@ -53,7 +53,7 @@ const columns: ITableColumn[] = [
     renderText: () => {
       return '成功';
     },
-    status: 'error',
+    status: 'danger',
     statusType: 'dot'
   },
   {
@@ -62,7 +62,7 @@ const columns: ITableColumn[] = [
     renderText: () => {
       return '成功';
     },
-    status: () => '#fff',
+    status: () => 'transparent',
     statusType: 'tag'
   },
   {

@@ -117,8 +117,8 @@ const statusTypeAndColor = computed(() => {
   return (column: ITableColumn, scope: any, flag = '0') => {
     if (column.status) {
       const status = typeof column.status === 'string' ? column.status : column.status(scope)
-      const isStatus = ['success', 'info', 'warning', 'danger', 'error'].indexOf(status) !== -1
-      return (flag === '0' ? isStatus : !isStatus) ? status : null
+      const isStatus = ['success', 'info', 'warning', 'danger'].indexOf(status) !== -1
+      return (flag === '0' ? isStatus : !isStatus) ? status : undefined
     }
     return null
   }

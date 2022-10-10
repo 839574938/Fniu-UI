@@ -21,6 +21,7 @@ import {withDefaults} from "vue";
 
 interface IStatusProps {
   shape?: 'tag' | 'dot' | 'text' | string,
+  [propName: string]: any
 }
 
 const props = withDefaults(defineProps<IStatusProps>(), {
