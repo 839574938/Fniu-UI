@@ -20,5 +20,5 @@ const install = (app: App) => {
 
 export default {
   install,
-  components
+  ...components
 }

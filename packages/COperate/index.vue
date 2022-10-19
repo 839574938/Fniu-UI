@@ -92,7 +92,7 @@ const handleCommand = (command: IOperateColumns) => {
 </script>
 
 <style scoped lang="scss">
-.el-button {
+.el-button+.el-button {
   margin: 0;
 }
 
