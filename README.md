@@ -41,3 +41,26 @@ app.use(FniuUI)
 app.mount('#app')
 
 ```
+
+3. **按需引入**
+```ts
+// main.ts
+import {createApp} from 'vue'
+import App from './App.vue'
+import ElementPlus from 'element-plus'
+import 'element-plus/dist/index.css'
+import CTable from "fniu-ui/packages/CTable";
+import CStatus from "fniu-ui/packages/CStatus";
+import COperate from "fniu-ui/packages/COperate";
+import 'fniu-ui/lib/style.css'
+
+const app = createApp(App)
+app.use(ElementPlus)
+app.use(CTable)
+app.use(CStatus)
+app.use(COperate)
+app.mount('#app')
+
+```
+
+
