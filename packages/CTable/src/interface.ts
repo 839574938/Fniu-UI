@@ -1,4 +1,4 @@
-import {IOperateColumns} from "../COperate/interface";
+import {IOperateColumns} from "../../COperate/src/interface";
 
 export interface ITableColumn {
   prop?: string,

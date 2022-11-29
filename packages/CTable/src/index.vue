@@ -41,8 +41,8 @@ export default {
 <script lang="ts" setup>
 import {ITableColumn, IPagination} from "./interface";
 import {computed, reactive, ref} from "vue";
-import COperate from "../COperate/index.vue";
-import CStatus from "../CStatus/index.vue";
+import COperate from "../../COperate/src/index.vue";
+import CStatus from "../../CStatus/src/index.vue";
 
 interface ITableProps {
   columns?: ITableColumn[] | [],

@@ -17,7 +17,7 @@
 </template>
 
 <script lang="ts" setup>
-import {IPagination, ITableColumn} from "../packages/CTable/interface";
+import {IPagination, ITableColumn} from "../packages/CTable/src/interface";
 import {reactive, ref} from "vue";
 
 const columns: ITableColumn[] = [

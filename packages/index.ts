@@ -1,6 +1,6 @@
-import CTable from "./CTable/index.vue";
-import COperate from "./COperate/index.vue"
-import CStatus from './CStatus/index.vue'
+import CTable from "./CTable/src/index.vue";
+import COperate from "./COperate/src/index.vue"
+import CStatus from './CStatus/src/index.vue'
 import type {App} from 'vue'
 
 const components = [
