@@ -3,11 +3,21 @@
     <el-row>
       <el-col v-for="(column, index) in props.columns" :key="index" v-bind="column.attrsCol">
         <slot :name="column.key">
-          <template v-if="column.type === 'input'">
-            <el-form-item :label="column.label" v-bind="column.attrsFormItem">
+          <el-form-item :label="column.label" v-bind="column.attrsFormItem">
+            <template v-if="column.type === 'input'">
               <el-input v-model="modelValue[column.key]" :placeholder="getPlaceholder(column)" v-bind="column.attrs"/>
-            </el-form-item>
-          </template>
+            </template>
+            <template v-if="column.type === 'select'">
+              <el-select v-model="modelValue[column.key]" :placeholder="getPlaceholder(column)" v-bind="column.attrs">
+                <el-option
+                  v-for="item in column.options"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value"
+                />
+              </el-select>
+            </template>
+          </el-form-item>
         </slot>
       </el-col>
     </el-row>
@@ -37,6 +47,7 @@ const props = withDefaults(defineProps<IQueryProps>(), {
 
 const getPlaceholder = computed(() => {
   return (column: IQueryColumn) => {
+    if(!column.attrs) column.attrs = {}
     return column.placeholder || column.attrs.placeholder || `${props.prevPlaceholder}${column.label || column.attrsFormItem.label || ''}`
   }
 })
