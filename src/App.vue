@@ -16,6 +16,7 @@ export default {
 </script>
 <script lang="ts" setup>
 import {reactive} from "vue";
+import {IQueryColumn} from "../packages/CQuery/src/interface";
 
 const queryData = reactive({
   name: '',
@@ -24,7 +25,13 @@ const queryData = reactive({
   switch: false
 })
 
-const columns = [
+
+const options =[
+  {value: '0', label: 'text0'},
+  {value: '1', label: 'text1'},
+  {value: '2', label: 'text2', disabled: true}
+ ]
+const columns: IQueryColumn[] = [
   {
     type: 'input',
     key: 'name',
@@ -42,12 +49,8 @@ const columns = [
     type: 'select',
     key: 'select',
     label: '选择框',
-    options: [
-      {value: '0', label: 'text0'},
-      {value: '1', label: 'text1'},
-      {value: '2', label: 'text2'}
-    ],
-    attrs: {disabled: true},
+    options: options,
+    // attrs: {disabled: true},
     attrsCol: {span: 6},
   },
   {
@@ -56,7 +59,18 @@ const columns = [
     label: '及时配送',
     attrs: {activeValue: "100", inactiveValue: "0"}
   },
-
+  {
+    type: 'checkbox',
+    key: 'checkbox',
+    label: 'checkbox',
+    options: options,
+  },
+  {
+    type: 'radio',
+    key: 'radio',
+    label: '单选按钮',
+    options: options,
+  }
 ];
 </script>
 

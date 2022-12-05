@@ -10,15 +10,37 @@
             <template v-if="column.type === 'select'">
               <el-select v-model="modelValue[column.key]" :placeholder="getPlaceholder(column)" v-bind="column.attrs">
                 <el-option
-                  v-for="item in column.options"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value"
+                  v-for="option in column.options"
+                  :key="option.value || option.name"
+                  :label="option.label || option.key"
+                  :value="option.value || option.name"
+                  :disabled="option.disabled"
                 />
               </el-select>
             </template>
             <template v-if="column.type === 'switch'">
               <el-switch v-model="modelValue[column.key]" v-bind="column.attrs"></el-switch>
+            </template>
+            <template v-if="column.type === 'checkbox'">
+              <el-checkbox-group v-model="modelValue[column.key]" v-bind="column.attrs">
+                <el-checkbox
+                  v-for="option in column.options"
+                  :key="option.value || option.name"
+                  :label="option.label || option.key"
+                  :name="option.value || option.name"
+                  :disabled="option.disabled"
+                />
+              </el-checkbox-group>
+            </template>
+            <template v-if="column.type === 'radio'">
+              <el-radio-group v-model="modelValue[column.key]" v-bind="column.attrs">
+                <el-radio
+                  v-for="option in column.options"
+                  :key="option.value || option.name"
+                  :label="option.value || option.name"
+                  :disabled="option.disabled"
+                >{{ option.label || option.key }}</el-radio>
+              </el-radio-group>
             </template>
           </el-form-item>
         </slot>
