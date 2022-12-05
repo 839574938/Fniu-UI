@@ -17,6 +17,9 @@
                 />
               </el-select>
             </template>
+            <template v-if="column.type === 'switch'">
+              <el-switch v-model="modelValue[column.key]" v-bind="column.attrs"></el-switch>
+            </template>
           </el-form-item>
         </slot>
       </el-col>
