@@ -1,12 +1,17 @@
 <template>
-  {{ queryData }}
-  <c-query v-model="queryData" :columns="columns" label-position="top">
-    <template #password>
-      <el-form-item label="密码">
-        <el-input v-model="queryData.password" placeholder="请输入密码"></el-input>
-      </el-form-item>
-    </template>
-  </c-query>
+  <div>
+    {{ queryData }}
+    <c-query v-model="queryData" :columns="columns" label-position="top" ref="queryForm">
+      <template #password>
+        <el-form-item label="密码">
+          <el-input v-model="queryData.password" placeholder="请输入密码"></el-input>
+        </el-form-item>
+      </template>
+    </c-query>
+
+    <el-button @click="resetForm">重置</el-button>
+    <el-button @click="submitForm" type="primary">提交</el-button>
+  </div>
 </template>
 
 <script lang="ts">
@@ -15,8 +20,8 @@ export default {
 }
 </script>
 <script lang="ts" setup>
-import {reactive} from "vue";
-import {IQueryColumn} from "../packages/CQuery/src/interface";
+import {reactive, ref} from "vue";
+import {IQueryColumn, IQueryExport} from "../packages/CQuery/src/interface";
 
 const queryData = reactive({
   name: '',
@@ -36,9 +41,9 @@ const columns: IQueryColumn[] = [
   {
     type: 'input',
     key: 'name',
-    attrs: {disabled: true,},
     attrsFormItem: {label: '姓名777',},
     attrsCol: {span: 6},
+    required: true,
   },
   {
     type: 'input',
@@ -81,6 +86,29 @@ const columns: IQueryColumn[] = [
     }
   }
 ];
+
+
+const queryForm = ref<IQueryExport>()
+const submitForm = async () => {
+  if(queryForm.value) {
+    const from = queryForm.value.ruleFormRef
+    await from.validate((valid, fields) => {
+      if (valid) {
+        console.log('submit!')
+      } else {
+        console.log('error submit!', fields)
+      }
+    })
+  }
+}
+
+const resetForm = () => {
+  if(queryForm.value) {
+    const from = queryForm.value.ruleFormRef
+    from.resetFields();
+  }
+}
+
 </script>
 
 <style scoped lang="scss">

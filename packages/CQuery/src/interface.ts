@@ -1,3 +1,5 @@
+import {FormInstance} from "element-plus";
+
 export interface IQueryColumn {
   type: 'input' | string,
   key: string,
@@ -23,4 +25,8 @@ export interface IOption {
   value?: string | number,
   name?: string | number,
   disabled?: boolean
+}
+
+export interface IQueryExport {
+  ruleFormRef: FormInstance
 }

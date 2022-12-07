@@ -1,9 +1,9 @@
 <template>
-  <el-form class="c-query" :model="modelValue" v-bind="$attrs">
+  <el-form class="c-query" :model="modelValue" :rules="rules" ref="ruleFormRef" v-bind="$attrs">
     <el-row>
       <el-col v-for="(column, index) in props.columns" :key="index" v-bind="column.attrsCol">
         <slot :name="column.key">
-          <el-form-item :label="column.label" v-bind="column.attrsFormItem">
+          <el-form-item :label="column.label" :prop="column.key" v-bind="column.attrsFormItem">
             <template v-if="column.type === 'input'">
               <el-input v-model="modelValue[column.key]" :placeholder="getPlaceholder(column)" v-bind="column.attrs"/>
             </template>
@@ -39,7 +39,8 @@
                   :key="option.value || option.name"
                   :label="option.value || option.name"
                   :disabled="option.disabled"
-                >{{ option.label || option.key }}</el-radio>
+                >{{ option.label || option.key }}
+                </el-radio>
               </el-radio-group>
             </template>
             <template v-if="column.type === 'date'">
@@ -63,27 +64,62 @@ export default {
 }
 </script>
 <script setup lang="ts">
-import {computed, withDefaults} from "vue";
+import {computed, ref, withDefaults} from "vue";
 import {IQueryColumn} from "./interface";
+import {FormInstance} from "element-plus";
 
 interface IQueryProps {
   columns?: IQueryColumn[] | [],
   modelValue: Object,
-  prevPlaceholder?: string
+  prevPlaceholder?: string,
+  prevSelectPlaceholder?: string
 }
 
 const props = withDefaults(defineProps<IQueryProps>(), {
   columns: () => [],
   modelValue: () => ({}),
-  prevPlaceholder: '请输入'
+  prevPlaceholder: '请输入',
+  prevSelectPlaceholder: '请选择'
 })
 
-const getPlaceholder = computed(() => {
-  return (column: IQueryColumn) => {
-    if(!column.attrs) column.attrs = {}
-    return column.placeholder || column.attrs.placeholder || `${props.prevPlaceholder}${column.label || column.attrsFormItem.label || ''}`
+const getPlaceholder = (column: IQueryColumn) => getTypeData(column).placeholder;
+const getTrigger = (column: IQueryColumn) => getTypeData(column).trigger;
+
+const getTypeData = (column: IQueryColumn) => {
+  if (!column.attrs) column.attrs = {}
+  const defaultPlaceholder = column.placeholder || column.attrs.placeholder
+  const label = column.label || column.attrsFormItem.label || ''
+  const defaultData = {
+    placeholder: defaultPlaceholder,
+    trigger: 'blur'
   }
+  if (['input'].includes(column.type)) {
+    defaultData.placeholder = defaultPlaceholder || `${props.prevPlaceholder}${label}`;
+    defaultData.trigger = 'blur';
+  } else if (['select', 'date'].includes(column.type)) {
+    defaultData.placeholder = defaultPlaceholder || `${props.prevSelectPlaceholder}${label}`;
+    defaultData.trigger = 'change';
+  }
+  return defaultData
+}
+
+const rules = computed(() => {
+  return props.columns.reduce((res, item) => {
+    res[item.key] = item.rules ? [...item.rules] : [];
+    if (item.required) {
+      res[item.key].unshift({required: true, message: getPlaceholder(item), trigger: getTrigger(item)})
+    }
+    return res;
+  }, {});
 })
+
+// c-query form表单实例
+const ruleFormRef = ref<FormInstance>()
+
+defineExpose({
+  ruleFormRef,
+})
+
 </script>
 
 <style scoped lang="scss">
