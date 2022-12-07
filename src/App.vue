@@ -22,15 +22,16 @@ const queryData = reactive({
   name: '',
   password: '',
   select: '0',
-  switch: false
+  switch: false,
+  date: null
 })
 
 
-const options =[
+const options = [
   {value: '0', label: 'text0'},
   {value: '1', label: 'text1'},
   {value: '2', label: 'text2', disabled: true}
- ]
+]
 const columns: IQueryColumn[] = [
   {
     type: 'input',
@@ -51,7 +52,6 @@ const columns: IQueryColumn[] = [
     label: '选择框',
     options: options,
     // attrs: {disabled: true},
-    attrsCol: {span: 6},
   },
   {
     type: 'switch',
@@ -70,6 +70,15 @@ const columns: IQueryColumn[] = [
     key: 'radio',
     label: '单选按钮',
     options: options,
+  },
+  {
+    type: 'date',
+    key: 'date',
+    label: '日期',
+    attrs: {
+      valueFormat: "YYYY-MM-DD",
+      format: "YYYY 年 MM 月 DD 日",
+    }
   }
 ];
 </script>

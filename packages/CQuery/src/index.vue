@@ -42,6 +42,14 @@
                 >{{ option.label || option.key }}</el-radio>
               </el-radio-group>
             </template>
+            <template v-if="column.type === 'date'">
+              <el-date-picker
+                v-model="modelValue[column.key]"
+                type="date"
+                :placeholder="getPlaceholder(column)"
+                v-bind="column.attrs"
+              />
+            </template>
           </el-form-item>
         </slot>
       </el-col>
