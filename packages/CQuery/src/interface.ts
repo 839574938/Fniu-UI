@@ -1,14 +1,16 @@
 import {FormInstance} from "element-plus";
 
 export interface IQueryColumn {
-  type: 'input' | string,
+  type: 'input' | 'select' | 'switch' | 'checkbox' | 'radio' | 'date' | string,
   key: string,
   label?: string,
   placeholder?: string,
   options?: IOption[],
-  attrs?: any,
-  attrsCol?: any,
-  attrsFormItem?: any,
+  attrs?: object,
+  attrsCol?: object,
+  attrsFormItem?: object,
+  rules?: object[],
+  required?: boolean,
 
   [propName: string]: any,
 }

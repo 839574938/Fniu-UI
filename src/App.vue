@@ -26,7 +26,7 @@ import {IQueryColumn, IQueryExport} from "../packages/CQuery/src/interface";
 const queryData = reactive({
   name: '',
   password: '',
-  select: '0',
+  select: null,
   switch: false,
   date: null
 })
@@ -44,6 +44,9 @@ const columns: IQueryColumn[] = [
     attrsFormItem: {label: '姓名777',},
     attrsCol: {span: 6},
     required: true,
+    rules: [
+      { min: 3, max: 5, message: 'Length should be 3 to 5', trigger: 'blur' },
+    ]
   },
   {
     type: 'input',
@@ -56,6 +59,7 @@ const columns: IQueryColumn[] = [
     key: 'select',
     label: '选择框',
     options: options,
+    required: true,
     // attrs: {disabled: true},
   },
   {

@@ -91,14 +91,14 @@ const getTypeData = (column: IQueryColumn) => {
   const label = column.label || column.attrsFormItem.label || ''
   const defaultData = {
     placeholder: defaultPlaceholder,
-    trigger: 'blur'
+    trigger: ['blur']
   }
   if (['input'].includes(column.type)) {
     defaultData.placeholder = defaultPlaceholder || `${props.prevPlaceholder}${label}`;
-    defaultData.trigger = 'blur';
+    defaultData.trigger = ['blur'];
   } else if (['select', 'date'].includes(column.type)) {
     defaultData.placeholder = defaultPlaceholder || `${props.prevSelectPlaceholder}${label}`;
-    defaultData.trigger = 'change';
+    defaultData.trigger = ['change', 'blur'];
   }
   return defaultData
 }
