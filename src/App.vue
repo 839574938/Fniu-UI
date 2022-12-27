@@ -8,9 +8,12 @@
         </el-form-item>
       </template>
     </c-query>
-
     <el-button @click="resetForm">重置</el-button>
     <el-button @click="submitForm" type="primary">提交</el-button>
+
+
+
+    <c-upload></c-upload>
   </div>
 </template>
 
@@ -45,7 +48,7 @@ const columns: IQueryColumn[] = [
     attrsCol: {span: 6},
     required: true,
     rules: [
-      { min: 3, max: 5, message: 'Length should be 3 to 5', trigger: 'blur' },
+      {min: 3, max: 5, message: 'Length should be 3 to 5', trigger: 'blur'},
     ]
   },
   {
@@ -60,7 +63,11 @@ const columns: IQueryColumn[] = [
     label: '选择框',
     options: options,
     required: true,
-    // attrs: {disabled: true},
+    attrs: {
+      onChange: (value: any) => {
+        console.log(value)
+      }
+    },
   },
   {
     type: 'switch',
@@ -94,7 +101,7 @@ const columns: IQueryColumn[] = [
 
 const queryForm = ref<IQueryExport>()
 const submitForm = async () => {
-  if(queryForm.value) {
+  if (queryForm.value) {
     const from = queryForm.value.ruleFormRef
     await from.validate((valid, fields) => {
       if (valid) {
@@ -107,7 +114,7 @@ const submitForm = async () => {
 }
 
 const resetForm = () => {
-  if(queryForm.value) {
+  if (queryForm.value) {
     const from = queryForm.value.ruleFormRef
     from.resetFields();
   }
