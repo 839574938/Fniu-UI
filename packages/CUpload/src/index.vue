@@ -23,7 +23,7 @@ import 'vue-cropper/dist/index.css'
 import {VueCropper} from "vue-cropper";
 import {UploadProps, UploadRawFile, UploadUserFile, ElMessage, UploadFile, UploadFiles} from "element-plus";
 import {Awaitable} from "element-plus/es/utils";
-import {ref} from "vue";
+import {ref, unref} from "vue";
 import {ErrorCode, ErrorInfo, IUploadError} from "./interface";
 import {getGlobalConfig} from "../../hook";
 
@@ -37,13 +37,9 @@ interface IUploadProps {
   onSuccess?: (response: any, uploadFile: UploadFile, uploadFiles: UploadFiles) => void
 }
 
-
-console.log(getGlobalConfig('uploadUrl'))
 const props = withDefaults(defineProps<IUploadProps>(), {
-  action: getGlobalConfig('uploadUrl'),
-  onError: (error: IUploadError) => {
-    ElMessage.error(error.errorInfo);
-  }
+  action: () => getGlobalConfig('uploadUrl'),
+  onError: (error: IUploadError) => ElMessage.error(error.errorInfo)
 })
 
 const loading = ref<boolean>(false);
