@@ -25,6 +25,7 @@ import {UploadProps, UploadRawFile, UploadUserFile, ElMessage, UploadFile, Uploa
 import {Awaitable} from "element-plus/es/utils";
 import {ref} from "vue";
 import {ErrorCode, ErrorInfo, IUploadError} from "./interface";
+import {getGlobalConfig} from "../../hook";
 
 interface IUploadProps {
   action?: string,
@@ -36,8 +37,10 @@ interface IUploadProps {
   onSuccess?: (response: any, uploadFile: UploadFile, uploadFiles: UploadFiles) => void
 }
 
+
+console.log(getGlobalConfig('uploadUrl'))
 const props = withDefaults(defineProps<IUploadProps>(), {
-  action: 'https://run.mocky.io/v3/9d059bf9-4660-45f2-925d-ce80ad6c4d15',
+  action: getGlobalConfig('uploadUrl'),
   onError: (error: IUploadError) => {
     ElMessage.error(error.errorInfo);
   }
@@ -48,7 +51,7 @@ const handleBeforeUpload: (rawFile: UploadRawFile) => Awaitable<void | undefined
   const fileName = file.name;
   const ext = fileName.substring(fileName.lastIndexOf(".") + 1).toLowerCase();
   if (props.fileType) { // 限制文件格式
-    if (props.fileType.indexOf(ext) < 0) {
+    if (props.fileType.toLowerCase().indexOf(ext) < 0) {
       const errInfo = {
         errorCode: ErrorCode.fileType,
         errorInfo: ErrorInfo.fileType,

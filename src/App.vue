@@ -12,8 +12,13 @@
     <el-button @click="submitForm" type="primary">提交</el-button>
 
 
-
-    <c-upload></c-upload>
+    {{ fileList }}
+    <c-upload
+        v-model:fileList="fileList"
+        fileType="jpg|jpeg|png|webp"
+        :fileSize="2048"
+        :limit="1"
+    ></c-upload>
   </div>
 </template>
 
@@ -25,6 +30,9 @@ export default {
 <script lang="ts" setup>
 import {reactive, ref} from "vue";
 import {IQueryColumn, IQueryExport} from "../packages/CQuery/src/interface";
+
+
+const fileList = ref([]);
 
 const queryData = reactive({
   name: '',
