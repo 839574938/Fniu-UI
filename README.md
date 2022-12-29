@@ -7,13 +7,15 @@
 
 ### Getting Started
 好的，如果您正在寻找让 FniuUI 变得更好的入门，您应该继续阅读。
-对于使用 FniuUI 开发您的网站的开发人员，您应该继续访问[文档](http://120.27.68.97/fniu-ui-doc/)已失效，服务器到期。
+对于使用 FniuUI 开发您的网站的开发人员，您应该继续访问[文档](https://839574938.github.io/Fniu-UI-Doc/)。
 
 ### 计划完成
 - [✅] c-table组件
 - [✅] c-tag组件
 - [✅] c-operate组件
 - [✅] c-query组件
+- [进行中] c-upload组件
+- [×] c-steps组件
 
 ### 安装此插件
 安装可以通过几个简单的步骤完成。从您的仓库的根目录执行以下操作：
@@ -36,7 +38,9 @@ import 'fniu-ui/lib/style.css'
 
 const app = createApp(App)
 app.use(ElementPlus)
-app.use(FniuUI)
+app.use(FniuUI, {
+    uploadUrl: '全局上传文件地址'
+})
 app.mount('#app')
 
 ```
